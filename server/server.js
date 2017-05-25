@@ -155,7 +155,7 @@ app.get('/users/me', authenticate, (req, res) => {
 app.post('/users/login', (req, res) => {
   var login = _.pick(req.body, ['email', 'password']);
 
-  console.log("login: ", login);
+  // console.log("login: ", login);
   User.findByCredentials(login.email, login.password).then((user) => {
     return user.generateAuthToken().then((token) => {
        res.header("x-auth", token).send(user);
@@ -163,7 +163,7 @@ app.post('/users/login', (req, res) => {
     })
     })
     .catch((e) => {
-      console.log(e);
+      // console.log(e);
       res
         .status(400)
         .send();
