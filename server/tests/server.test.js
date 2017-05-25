@@ -307,8 +307,21 @@ describe('POST /users/login',() => {
           expect(user.tokens.length).toBe(0);
           done();
         }).catch(done);
-
       })
   });
+});
 
+describe('DELETE /users/me/token',() => {
+  it('should remove auth token on logout', (done) => {
+    request(app)
+      .delete('/users/me/token')
+      .set("x-auth", users[0].tokens[0].token)
+      .expect(200)
+      .end((res) => {
+        User.findByToken(users[0].tokens[0].token).then((user) => {
+          expect(user).toNotExist();
+          done();
+        }).catch(done)
+      })
+  });
 });
